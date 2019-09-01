@@ -37,14 +37,14 @@ def word_matches (word, word_list):
     key_list = []
     alpha_chars_match = "".join(sorted(word)) 
     for i in word_list:
-        if alpha_chars_match == "".join(sorted(i)):
+        if alpha_chars_match == "".join(sorted(i)) and i != word:
             key_list.append(i)
     return key_list
 
 # anagram_solver (word, word_list) takes a word and a list of words and 
 # makes a shorter list of only words of the length of the word and then
-# checks the shorter list for anagrams. It returns all matches including
-# the word itself.
+# checks the shorter list for anagrams. It returns all matches.
+
 def anagram_solver (word, word_list):
     x = len(word)
     short_list = words_of_length (x, word_list)
@@ -66,7 +66,8 @@ def good_or_bad (word, word_list, num):
         return False
 
 # This makes a list of good anagram words. If run with num set to 4 it will make a list
-# of anagrams that all have at least 4 solutions plus itself.
+# of anagrams that all have at least 4 solutions. It takes a long time to run. It was used to
+# make gauragram.txt and is here for reference.
 def make_list (word_list):
     internal_list = []
     for i in word_list:
@@ -86,7 +87,7 @@ def main ():
         puzzles = load_words_two()
         puzzle = random.choice(puzzles)
         solves = anagram_solver(puzzle, words)
-        num_solutions = len(solves) - 1
+        num_solutions = len(solves)
         print("Okay your word is",puzzle," and the number of possible anagrams is ",num_solutions)
         guess = input("Enter all the anagrams you can think of: ")
         guesses = guess.split()
