@@ -41,10 +41,8 @@ def word_matches (word, word_list):
             key_list.append(i)
     return key_list
 
-# anagram_solver (word, word_list) takes a word and a list of words and 
-# makes a shorter list of only words of the length of the word and then
-# checks the shorter list for anagrams. It returns all matches.
-
+# anagram_solver (word, word_list) stitches together two functions
+# takes a word and a list of words and makes a shorter list of only words of the length of the # # word and then checks the shorter list for anagrams. It returns all matches.
 def anagram_solver (word, word_list):
     x = len(word)
     short_list = words_of_length (x, word_list)
@@ -57,7 +55,8 @@ def anagram_picker (word_list):
 
 # takes a word list of words and a number of solutions and returns True if the word
 # as more solutions than the number. straight greater than is preferable here
-# because that is how many solutions there are because the list includes the word that it is checking.
+# because that is how many solutions there are because the list includes the word 
+# that it is checking.
 def good_or_bad (word, word_list, num):
     a_list = anagram_solver(word, word_list)
     if len(a_list) > num:
@@ -77,10 +76,12 @@ def make_list (word_list):
     return internal_list
 
 def main ():
+    number_rounds = 3
     score = 0
     correct_guesses = []
-    print("Welcome to Anagrams!\n")
-    a = input("Type 1 to play or 2 to quit: ")
+    print("Welcome to Anagrams!")
+    print("You may play a single scored game, or a scored round of three with highscores!\n")
+    a = input("Enter 1 for Quick Play, 2 for Scored Round, or 3 to quit: ")
     if a == '1':
         guesses = []
         words = load_words()
@@ -88,7 +89,8 @@ def main ():
         puzzle = random.choice(puzzles)
         solves = anagram_solver(puzzle, words)
         num_solutions = len(solves)
-        print("Okay your word is",puzzle," and the number of possible anagrams is ",num_solutions)
+        print("Your word is",puzzle)
+        print("The number of possible anagrams is ",num_solutions)
         guess = input("Enter all the anagrams you can think of: ")
         guesses = guess.split()
         for i in guesses:
@@ -97,7 +99,30 @@ def main ():
                 correct_guesses.append(i)
         print("You got ",score," correct")
         print("You found the following anagrams, ", correct_guesses)
-        print("All the solutions to this puzzle are, ", solves)
+        print("All the solutions to this puzzle are, ",solves)
+    
+    elif a == '2':
+        for i in range(number_rounds):
+            correct_guesses = []
+            guesses = []
+            words = load_words()
+            puzzles = load_words_two()
+            puzzle = random.choice(puzzles)
+            solves = anagram_solver(puzzle, words)
+            num_solutions = len(solves)
+            print("Your word is",puzzle)
+            print("The number of possible anagrams is ",num_solutions)
+            guess = input("Enter all the anagrams you can think of: ")
+            guesses = guess.split()
+            for i in guesses:
+                if i in solves:
+                    score += 1
+                    correct_guesses.append(i)
+            print("Your score is ",score)
+            print("You found the following anagrams, ", correct_guesses)
+            print("All the solutions to this puzzle are, ",solves,"\n")
+        print("Congrats your final score is",score)       
+        
             
 
 
@@ -109,7 +134,3 @@ def main ():
 
 if __name__ == "__main__":
     main()
-    
-    
-    
-
